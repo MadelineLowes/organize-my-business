@@ -11,7 +11,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "inquirer": "^8.0.0",
+    "inquirer": "^8.2.5",
     "mysql2": "^3.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadelineLowes/organize-my-business.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MadelineLowes/organize-my-business/issues"
+  },
+  "homepage": "https://github.com/MadelineLowes/organize-my-business#readme"
 }
