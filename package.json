@@ -1,0 +1,25 @@
+{
+  "name": "02-challenge",
+  "version": "1.0.0",
+  "description": "## Your Task",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "inquirer": "^8.2.5",
+    "mysql2": "^3.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MadelineLowes/organize-my-business.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MadelineLowes/organize-my-business/issues"
+  },
+  "homepage": "https://github.com/MadelineLowes/organize-my-business#readme"
+}
