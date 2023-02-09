@@ -1,6 +1,8 @@
 const express = require('express');
 const inquirer = require('inquirer');
-const db = require('./config/connection')
+const mysql = require('mysql2');
+
+const cTable = require('console.table');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,63 +11,116 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// Connect to the database
+const connection = mysql.createConnection(
+    {
+        host: 'localhost',
+        user: 'root',
+        password: 'luv21dance#P',
+        database: 'company_db'
+    },
+)
+connection.connect(function (err) {
+    if (err) {
+        throw err;
+    }
+    console.log('Connected to company_db database.');
+    start();
+})
+
+// called from connection.js once connection is established
+// there should be an exit option
 function start() {
     inquirer.prompt([
         {
             message: 'What would you like to do?',
             type: 'list',
             name: "choice",
-            choices: ["Check departments", "Add department", "Remove department", "Check roles", "Add role", "Remove role", "Check employees", "Add employees", "Remove employees"]
+            choices: ["View all departments", "Add department", "View all roles", "Add role", "View all employees", "Update employee's role", "Add employee"]
         }
     ]).then((answerObj) => {
-        if (answerObj.choice == "Check departments") {
-            checkDept();
-        } else if (answerObj.choice == "Add department") {
-            addDept();
-        } else if (answerObj.choice == "Remove department") {
-            removeDept();
-        } else if (answerObj.choice == "Check roles") {
-            checkRole();
-        } else if (answerObj.choice == "Add role") {
-            addRole();
-        } else if (answerObj.choice == "Remove role") {
-            removeRole();
-        } else if (answerObj.choice == "Check employees") {
-            checkEmp();
-        } else if (answerObj.choice == "Add employees") {
-            addEmp();
-        } else if (answerObj.choice == "Remove employees") {
-            removeEmp();
-        } else {
-            throw err;
+        switch (answerObj.choice) {
+            case "View all departments":
+                checkDept();
+                break;
+            case "Add department":
+                addDept();
+                break;
+            // case "Remove department":
+            //     removeDept();
+            //     break;
+            case "View all roles":
+                checkRole();
+                break;
+            case "Add role":
+                addRole();
+                break;
+            // case "Remove role":
+            //     removeRole();
+            //     break;
+            case "View all employees":
+                checkEmp();
+                break;
+            case "Update employee's role":
+                updateEmpRole();
+                break;
+            case "Add employee":
+                addEmp();
+                break;
+            // case "Remove employee":
+            //     removeEmp();
+            //     break;
+            default:
+                throw err;
         }
+    })
+}
+// GOOD UNTIL HERE
+
+function querying() {
+    connection.query('SELECT * FROM department', function(err, results){
+        if (err) throw err;
+        console.table("results: " + results);
+        // connection.end() - do i need this?
+        start();
     })
 }
 
 // read all departments
-async function checkDept() {
-    app.get('api/department', (req, res) => {
-        const sql = 'SELECT * FROM department';
+// removed "async" before declaring function
+function checkDept() {
+    // app.get('api/department', (req, res) => {
+        // const sql = 'SELECT department.id, department.name FROM department';
+        //(sql, err, rows
+        // promise().
+         connection.query('SELECT * FROM department', function (err, rows) {
+            if (err) throw err;
+            // {
+            //     res.statusMessage(400).json({ error: res.message });
+            //     return;
+            // }
+            console.log("rows: ", rows);
+        })
+      
+        //     res.json({
+        //         message: 'success',
+        //         data: rows
+        //     })
+            // .then(([rows]) => {
+            //     let departments = rows;
+            //     console.log("\n");
+            //     console.table(departments);
+            // })
+            // .then(() => start());
+        // })
+          
+    // });
 
-        db.query(sql, (err, rows) => {
-            if (err) {
-                res.statusMessage(400).json({ error: res.message });
-                return;
-            }
-            res.json({
-                message: 'success',
-                data: rows
-            });
-        });
-    });
-    console.table(data)
-    console.log('\n')
-    start()
 };
 
 // create a department
 async function addDept() {
-    inquirer.prompt([
+    await inquirer.prompt([
         {
             message: 'What is the name of the department?',
             type: 'input',
@@ -77,73 +132,84 @@ async function addDept() {
                 message: 'No department name provided'
             });
         } else {
-            app.post('/api/department/:id', ({ body }, res) => {
-                const sql = `INSERT INTO department (dep_name)
-                VALUES (?)`
-                const params = [answerObj.dep_name];
+            // app.post('/api/department/:id', ({ body }, res) => {
+            console.table("this is the answerObj: " + answerObj); // a test to ensure it's registered
 
-                db.query(sql, params, (err, result) => {
-                    if (err) {
-                        res.statusMessage(400).json({ error: err.message });
-                        return;
-                    }
-                    res.json({
-                        message: 'success',
-                        data: body,
-                        changes: result.affectedRows,
-                        id: req.params.id
-                    });
-                });
-            });
+            connection.query('INSERT INTO department SET ?', {
+                dep_name: answerObj.dep_name,
+            }, function(err) {
+                if (err) throw err;
+                console.log("added new department");
+                querying()
+            })
+                // const sql = `INSERT INTO department SET ?`, {
+                //     dep_name: answerObj.dep_name,
+                // }
+                // const params = [answerObj.dep_name];
+
+                // connection.query(sql, params, (err, result) => {
+                //     if (err) {
+                //         res.statusMessage(400).json({ error: err.message });
+                //         return;
+                //     }
+                //     res.json({
+                //         message: 'success',
+                //         data: body,
+                //         changes: result.affectedRows,
+                //         id: req.params.id
+                //     });
+                // });
+            };
         }
-    });
+    )
+    // });
 
-    console.table(data)
-    console.log('\n')
-    start()
+    // console.table(data)
+    // console.log('\n')
+    // start()
 };
 
 // delete a department
-async function removeDept() {
-    inquirer.prompt([
-        {
-            message: 'What is the name of the department?',
-            type: 'input',
-            name: 'dep_name',
-        }
-    ]).then((answerObj) => {
-        if (answerObj.dep_name == '') {
-            res.json({
-                message: 'No department name provided'
-            });
-        } else {
-            app.delete('api/department/:id', (req, res) => {
-                const sql = 'DELETE FROM department WHERE id = ?';
-                const params = [req.params.id];
+// async function removeDept() {
+//     inquirer.prompt([
+//         {
+//             message: 'What is the name of the department?',
+//             type: 'input',
+//             name: 'dep_name',
+//         }
+//     ]).then((answerObj) => {
+//         if (answerObj.dep_name == '') {
+//             res.json({
+//                 message: 'No department name provided'
+//             });
+//         } else {
+//             app.delete('api/department/:id', (req, res) => {
+//                 const sql = 'DELETE FROM department WHERE id = ?';
+//                 const params = [req.params.id];
 
-                db.query(sql, params, (err, result) => {
-                    if (err) {
-                        res.statusMessage(400).json({ error: res.message });
-                    } else if (!result.affectedRows) {
-                        res.json({
-                            message: 'Department not found'
-                        });
-                    } else {
-                        res.json({
-                            message: 'deleted',
-                            changes: result.affectedRows,
-                            id: req.params.id
-                        });
-                    }
-                });
-            });
-        }
-    })
+//                 db.query(sql, params, (err, result) => {
+//                     if (err) {
+//                         res.statusMessage(400).json({ error: res.message });
+//                     } else if (!result.affectedRows) {
+//                         res.json({
+//                             message: 'Department not found'
+//                         });
+//                     } else {
+//                         res.json({
+//                             message: 'deleted',
+//                             changes: result.affectedRows,
+//                             id: req.params.id
+//                         });
+//                     }
+//                 });
+//             });
+//         }
+//     })
 
-    console.table(data)
-    console.log('\n')
-    start()
-};
+//     console.table(data)
+//     console.log('\n')
+//     start()
+// };
 
 async function checkRole() {
     app.get('api/role', (req, res) => {
@@ -214,65 +280,67 @@ async function addRole() {
     start()
 };
 
-async function removeRole() {
-    inquirer.prompt([
-        {
-            message: 'What is the title of the role?',
-            type: 'input',
-            name: 'title',
-        }
-    ]).then((answerObj) => {
-        if (answerObj.title == '') {
-            res.json({
-                message: 'No role title provided'
-            });
-        } else {
-            app.delete('api/role/:id', (req, res) => {
-                const sql = 'DELETE FROM role WHERE id = ?';
-                const params = [req.params.id];
+// async function removeRole() {
+//     inquirer.prompt([
+//         {
+//             message: 'What is the title of the role?',
+//             type: 'input',
+//             name: 'title',
+//         }
+//     ]).then((answerObj) => {
+//         if (answerObj.title == '') {
+//             res.json({
+//                 message: 'No role title provided'
+//             });
+//         } else {
+//             app.delete('api/role/:id', (req, res) => {
+//                 const sql = 'DELETE FROM role WHERE id = ?';
+//                 const params = [req.params.id];
 
-                db.query(sql, params, (err, result) => {
-                    if (err) {
-                        res.statusMessage(400).json({ error: res.message });
-                    } else if (!result.affectedRows) {
-                        res.json({
-                            message: 'Role not found'
-                        });
-                    } else {
-                        res.json({
-                            message: 'deleted',
-                            changes: result.affectedRows,
-                            id: req.params.id
-                        });
-                    }
-                });
-            });
-        }
-    })
-    console.table(data)
-    console.log('\n')
-    start()
-};
+//                 db.query(sql, params, (err, result) => {
+//                     if (err) {
+//                         res.statusMessage(400).json({ error: res.message });
+//                     } else if (!result.affectedRows) {
+//                         res.json({
+//                             message: 'Role not found'
+//                         });
+//                     } else {
+//                         res.json({
+//                             message: 'deleted',
+//                             changes: result.affectedRows,
+//                             id: req.params.id
+//                         });
+//                     }
+//                 });
+//             });
+//         }
+//     })
+//     console.table(data)
+//     console.log('\n')
+//     start()
+// };
 
 async function checkEmp() {
-    app.get('api/employee', (req, res) => {
-        const sql = 'SELECT * FROM employee';
+    // app.get('api/employee', (req, res) => {
+        let sql = `SELECT employee.id, 
+        employee.first_name, 
+        employee.last_name, 
+        role.title, 
+        role.salary,
+        department.dep_name AS 'department',
+        manager.first_name AS 'manager' 
+        FROM employee, role, department WHERE department.id = employee.role_id
+        OREDER BY employee.id ASC`;
 
-        db.query(sql, (err, rows) => {
-            if (err) {
-                res.statusMessage(400).json({ error: res.message });
-                return;
-            }
-            res.json({
-                message: 'success',
-                data: rows
-            });
+        connection.promise().query(sql, (err, results) => {
+            if (err) throw err;
+            console.table(results);
+            console.log('\n')
+            start();
         });
-    });
-    console.table(data)
-    console.log('\n')
-    start()
-};
+    };
+
+async function updateEmpRole() { }
 
 async function addEmp() {
     inquirer.prompt([
@@ -328,50 +396,50 @@ async function addEmp() {
     start()
 };
 
-async function removeEmp() {
-    inquirer.prompt([
-        {
-            message: 'What is the first name of the employee?',
-            type: 'input',
-            name: 'first_name',
-        },
-        {
-            message: 'What is the last_name of this employee?',
-            type: 'input',
-            name: 'last_name',
-        }
-    ]).then((answerObj) => {
-        if (answerObj.first_name == '' && answerObj.last_name == '') {
-            res.json({
-                message: 'No employee name provided'
-            });
-        } else {
-            app.delete('api/employee/:id', (req, res) => {
-                const sql = 'DELETE FROM department WHERE id = ?';
-                const params = [req.params.id];
+// async function removeEmp() {
+//     inquirer.prompt([
+//         {
+//             message: 'What is the first name of the employee?',
+//             type: 'input',
+//             name: 'first_name',
+//         },
+//         {
+//             message: 'What is the last_name of this employee?',
+//             type: 'input',
+//             name: 'last_name',
+//         }
+//     ]).then((answerObj) => {
+//         if (answerObj.first_name == '' && answerObj.last_name == '') {
+//             res.json({
+//                 message: 'No employee name provided'
+//             });
+//         } else {
+//             app.delete('api/employee/:id', (req, res) => {
+//                 const sql = 'DELETE FROM department WHERE id = ?';
+//                 const params = [req.params.id];
 
-                db.query(sql, params, (err, result) => {
-                    if (err) {
-                        res.statusMessage(400).json({ error: res.message });
-                    } else if (!result.affectedRows) {
-                        res.json({
-                            message: 'Employee not found'
-                        });
-                    } else {
-                        res.json({
-                            message: 'deleted',
-                            changes: result.affectedRows,
-                            id: req.params.id
-                        });
-                    }
-                });
-            });
-        }
-    })
-    console.table(data)
-    console.log('\n')
-    start()
-};
+//                 db.query(sql, params, (err, result) => {
+//                     if (err) {
+//                         res.statusMessage(400).json({ error: res.message });
+//                     } else if (!result.affectedRows) {
+//                         res.json({
+//                             message: 'Employee not found'
+//                         });
+//                     } else {
+//                         res.json({
+//                             message: 'deleted',
+//                             changes: result.affectedRows,
+//                             id: req.params.id
+//                         });
+//                     }
+//                 });
+//             });
+//         }
+//     })
+//     console.table(data)
+//     console.log('\n')
+//     start()
+// };
 
 
 
@@ -387,6 +455,4 @@ app.use((req, res) => {
     res.status(404).end();
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
