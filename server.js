@@ -343,7 +343,7 @@ async function checkEmp() {
 async function updateEmpRole() { }
 
 async function addEmp() {
-    inquirer.prompt([
+    await inquirer.prompt([
         {
             message: 'What is the first name of the employee?',
             type: 'input',

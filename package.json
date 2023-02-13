@@ -23,5 +23,6 @@
   "bugs": {
     "url": "https://github.com/MadelineLowes/organize-my-business/issues"
   },
-  "homepage": "https://github.com/MadelineLowes/organize-my-business#readme"
+  "homepage": "https://github.com/MadelineLowes/organize-my-business#readme",
+  "devDependencies": {}
 }
