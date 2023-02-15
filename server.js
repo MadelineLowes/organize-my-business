@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Connect to the database
-const connection = mysql.createConnection(
+const db = mysql.createConnection(
     {
         host: 'localhost',
         user: 'root',
@@ -20,28 +20,25 @@ const connection = mysql.createConnection(
         database: 'company_db'
     },
 )
-connection.connect(function (err) {
-    if (err) {
-        throw err;
-    }
+db.connect(function (err) {
+    if (err) throw err;
     console.log('Connected to company_db database.');
     start();
 })
 
 // called from connection.js once connection is established
-// there should be an exit option
 function start() {
     inquirer.prompt([
         {
             message: 'What would you like to do?',
             type: 'list',
             name: "choice",
-            choices: ["View all departments", "Add department", "View all roles", "Add role", "View all employees", "Update employee's role", "Add employee"]
+            choices: ["View all departments", "Add department", "View all roles", "Add role", "View all employees", "Update employee's role", "Add employee", "Quit"]
         }
     ]).then((answerObj) => {
         switch (answerObj.choice) {
             case "View all departments":
-                checkDept();
+                viewDept();
                 break;
             case "Add department":
                 addDept();
@@ -50,7 +47,7 @@ function start() {
             //     removeDept();
             //     break;
             case "View all roles":
-                checkRole();
+                viewRole();
                 break;
             case "Add role":
                 addRole();
@@ -59,7 +56,7 @@ function start() {
             //     removeRole();
             //     break;
             case "View all employees":
-                checkEmp();
+                viewEmp();
                 break;
             case "Update employee's role":
                 updateEmpRole();
@@ -70,38 +67,24 @@ function start() {
             // case "Remove employee":
             //     removeEmp();
             //     break;
+            case "Quit":
+                process.exit();
             default:
-                throw err;
-        }
-    })
-}
-// GOOD UNTIL HERE
+                process.exit();
 
-function querying() {
-    connection.query('SELECT * FROM department', function(err, results){
-        if (err) throw err;
-        console.table("results: " + results);
-        // connection.end() - do i need this?
-        start();
+        }
     })
 }
 
 // read all departments
-// removed "async" before declaring function
-function checkDept() {
-    // app.get('api/department', (req, res) => {
-        // const sql = 'SELECT department.id, department.name FROM department';
-        //(sql, err, rows
-        // promise().
-         connection.query('SELECT * FROM department', function (err, rows) {
+function viewDept() {
+        const sql = 'SELECT * FROM department';
+        db.query(sql, function (err, rows) {
             if (err) throw err;
-            // {
-            //     res.statusMessage(400).json({ error: res.message });
-            //     return;
-            // }
-            console.log("rows: ", rows);
+            console.table(rows);
+            start();
         })
-      
+
         //     res.json({
         //         message: 'success',
         //         data: rows
@@ -135,7 +118,7 @@ async function addDept() {
             // app.post('/api/department/:id', ({ body }, res) => {
             console.table("this is the answerObj: " + answerObj); // a test to ensure it's registered
 
-            connection.query('INSERT INTO department SET ?', {
+            db.query('INSERT INTO department SET ?', {
                 dep_name: answerObj.dep_name,
             }, function(err) {
                 if (err) throw err;
@@ -147,7 +130,7 @@ async function addDept() {
                 // }
                 // const params = [answerObj.dep_name];
 
-                // connection.query(sql, params, (err, result) => {
+                // db.query(sql, params, (err, result) => {
                 //     if (err) {
                 //         res.statusMessage(400).json({ error: err.message });
                 //         return;
@@ -211,7 +194,7 @@ async function addDept() {
 //     start()
 // };
 
-async function checkRole() {
+async function viewRole() {
     app.get('api/role', (req, res) => {
         const sql = 'SELECT * FROM role';
 
@@ -320,7 +303,7 @@ async function addRole() {
 //     start()
 // };
 
-async function checkEmp() {
+async function viewEmp() {
     // app.get('api/employee', (req, res) => {
         let sql = `SELECT employee.id, 
         employee.first_name, 
@@ -332,7 +315,7 @@ async function checkEmp() {
         FROM employee, role, department WHERE department.id = employee.role_id
         OREDER BY employee.id ASC`;
 
-        connection.promise().query(sql, (err, results) => {
+        db.promise().query(sql, (err, results) => {
             if (err) throw err;
             console.table(results);
             console.log('\n')
@@ -440,10 +423,6 @@ async function addEmp() {
 //     console.log('\n')
 //     start()
 // };
-
-
-
-
 
 
 // Close the connection
