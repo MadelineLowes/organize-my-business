@@ -16,16 +16,16 @@ VALUES  (1, 'Recruiter', 90000),
         (4, 'Accountant', 125000),
         (5, 'Lawyer', 190000);
 
-INSERT INTO employee (role_id, first_name, last_name)
-VALUES  (1, 'Ana', 'Alberts'),
-        (2, 'Billie', 'Brown'),
-        (3, 'Carl', 'Cameron'),
-        (3, 'Denise', 'Demitri'),
-        (4, 'Elizabeth', 'Escoffier'),
-        (5, 'Frank', 'Fredrick'),
-        (6, 'Georgia', 'Giuseppe'),
-        (6, 'Hariet', 'Hoffman'),
-        (7, 'Ingrid', 'Idol');
+INSERT INTO employee (role_id, first_name, last_name, manager_id)
+VALUES  (1, 'Ana', 'Alberts', null),
+        (2, 'Billie', 'Brown', null),
+        (3, 'Carl', 'Cameron', 2),
+        (3, 'Denise', 'Demitri', 2),
+        (4, 'Elizabeth', 'Escoffier', null),
+        (5, 'Frank', 'Fredrick', null),
+        (6, 'Georgia', 'Giuseppe', 6),
+        (6, 'Hariet', 'Hoffman', 6),
+        (7, 'Ingrid', 'Idol', null);
 
 
 -- INSERT INTO employee (role_id, first_name, last_name, manager_id)
