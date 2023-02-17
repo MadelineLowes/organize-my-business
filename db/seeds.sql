@@ -5,36 +5,26 @@ VALUES  ('HR'),
         ('SALES'),
         ('ENGINEERING'),
         ('FINANCE'),
-        ('LEGAL');
+        ('LEGAL'),
+        ('TBD');
 
 INSERT INTO role (department_id, title, salary)
-VALUES  (1, 'Recruiter', 90000),
-        (2, 'Sales Lead', 100000),
-        (2, 'Salesperson', 80000),
-        (3, 'Software Engineer', 120000),
-        (4, 'Account Manager', 160000),
-        (4, 'Accountant', 125000),
-        (5, 'Lawyer', 190000);
+VALUES  (1, 'RECRUITER', 90000),
+        (2, 'SALES LEAD', 100000),
+        (2, 'SALESPERSON', 80000),
+        (3, 'SOFTWARE ENGINEER', 120000),
+        (4, 'ACCOUNT MANAGER', 160000),
+        (4, 'ACCOUNTANT', 125000),
+        (5, 'LAWYER', 190000),
+        (6, 'TBD', 0);
 
 INSERT INTO employee (role_id, first_name, last_name, manager_id)
-VALUES  (1, 'Ana', 'Alberts', null),
-        (2, 'Billie', 'Brown', null),
-        (3, 'Carl', 'Cameron', 2),
-        (3, 'Denise', 'Demitri', 2),
-        (4, 'Elizabeth', 'Escoffier', null),
-        (5, 'Frank', 'Fredrick', null),
-        (6, 'Georgia', 'Giuseppe', 6),
-        (6, 'Hariet', 'Hoffman', 6),
-        (7, 'Ingrid', 'Idol', null);
-
-
--- INSERT INTO employee (role_id, first_name, last_name, manager_id)
--- VALUES  (1, 'Ana', 'Alberts', 6),
---         (2, 'Billie', 'Brown', null),
---         (3, 'Carl', 'Cameron', 2),
---         (3, 'Denise', 'Demitri', 2),
---         (4, 'Elizabeth', 'Escoffier', null),
---         (5, 'Frank', 'Fredrick', null),
---         (6, 'Georgia', 'Giuseppe', 6),
---         (6, 'Hariet', 'Hoffman', 6),
---         (7, 'Ingrid', 'Idol', null);
+VALUES  (1, 'ANA', 'ALBERTS', null),
+        (2, 'BILLIE', 'BROWN', null),
+        (3, 'CARL', 'CAMERON', 2),
+        (3, 'DENISE', 'DEMITRI', 2),
+        (4, 'ELIZABETH', 'ESCOFFIER', null),
+        (5, 'FRANK', 'FREDRICK', null),
+        (6, 'GEORGIA', 'GIUSEPPE', 6),
+        (6, 'HARIET', 'HOFFMAN', 6),
+        (7, 'INGRID', 'IDOL', null);
