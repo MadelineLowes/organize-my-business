@@ -184,7 +184,6 @@ function viewEmpByDept() {
     })
 };
 
-
 // ADD
 function addDept() {
     inquirer.prompt([
