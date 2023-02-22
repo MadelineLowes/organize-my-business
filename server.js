@@ -242,7 +242,7 @@ function addRole() {
                 value: results[i].id,
             })
         }
-        deptChoices.push({ name: 'TBD', value: null });
+        deptChoices.push({ name: 'TBD', value: null});
         inquirer.prompt([
             {
                 message: 'What is the title of the role?',
@@ -250,15 +250,23 @@ function addRole() {
                 name: 'title',
             },
             {
-                message: 'What is the salary of this role?',
-                type: 'input',
-                name: 'salary',
-            },
-            {
                 message: 'What department does this role belongs to?',
                 type: 'list',
                 name: 'department_id',
                 choices: deptChoices,
+            },
+            {
+                message: 'What is the salary of this role?',
+                type: 'number',
+                name: 'salary',
+                validate: function (salary) {
+                    if (isNaN(salary)) {
+                        console.log('     Please enter a numerical value');
+                        return false;
+                    } else if (!isNaN(salary)) {
+                        return true;
+                    } 
+                } 
             }
         ]).then((answerObj) => {
             if (answerObj.title == '') {
@@ -307,7 +315,7 @@ function addEmp() {
                 })
             }
             // adding options to array in case
-            roleChoices.push({ name: 'TBD', value: 'TBD' });
+            roleChoices.push({ name: 'TBD', value: null });
             manChoices.push({ name: 'NULL', value: null });
             inquirer.prompt([
                 {
@@ -341,13 +349,6 @@ function addEmp() {
                     console.log('No last name provided');
                     // restart function
                     addEmp();
-                } else if (answerObj.role_id == 'TBD') {
-                    const sql = `INSERT INTO employee (role_id, first_name, last_name, manager_id) VALUES ROW (null, '${answerObj.first_name}', '${answerObj.last_name}', ${answerObj.manager_id})`;
-                    db.query(sql, function (err) {
-                        if (err) throw err;
-                        // call viewEmp() function to show the updated employee list
-                        viewEmp();
-                    });
                 } else {
                     const sql = `INSERT INTO employee (role_id, first_name, last_name, manager_id) VALUES ROW (${answerObj.role_id}, '${answerObj.first_name}', '${answerObj.last_name}', ${answerObj.manager_id})`;
                     db.query(sql, function (err) {
@@ -383,37 +384,28 @@ function updateEmpRole() {
                     value: results[i].id,
                 })
             }
-            roleChoices.push({ name: 'TBD', value: 'TBD' });
-            empChoices.push({ name: 'NULL', value: null });
+            // if employee is changing roles but the role isn't yet determined
+            roleChoices.push({ name: 'TBD', value: null });
             inquirer.prompt([
                 {
-                    message: 'What is the ID of the employee you would like to update?',
+                    message: 'What is the name of the employee you would like to update?',
                     type: 'list',
                     name: 'employee_id',
                     choices: empChoices,
                 },
                 {
-                    message: 'What is the ID that you would like to update their role to?',
+                    message: 'What would you like to update their role to?',
                     type: 'list',
                     name: 'role_id',
                     choices: roleChoices,
                 }
             ]).then((answerObj) => {
-                if (answerObj.role_id == 'TBD') {
-                    const sql = `UPDATE employee SET role_id = null WHERE id = ${answerObj.employee_id}`;
-                    db.query(sql, function (err) {
-                        if (err) throw err;
-                        // call viewEmp() function to show the updated employee list
-                        viewEmp();
-                    });
-                } else {
-                    const sql = `UPDATE employee SET role_id = ${answerObj.role_id} WHERE id = ${answerObj.employee_id}`;
-                    db.query(sql, function (err) {
-                        if (err) throw err;
-                        // call viewEmp() function to show the updated employee list
-                        viewEmp();
-                    });
-                }
+                const sql = `UPDATE employee SET role_id = ${answerObj.role_id} WHERE id = ${answerObj.employee_id}`;
+                db.query(sql, function (err) {
+                    if (err) throw err;
+                    // call viewEmp() function to show the updated employee list
+                    viewEmp();
+                });
             });
         })
     })
