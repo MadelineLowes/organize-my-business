@@ -5,8 +5,7 @@ VALUES  ('HR'),
         ('SALES'),
         ('ENGINEERING'),
         ('FINANCE'),
-        ('LEGAL'),
-        ('TBD');
+        ('LEGAL');
 
 INSERT INTO role (department_id, title, salary)
 VALUES  (1, 'RECRUITER', 90000),
@@ -15,8 +14,7 @@ VALUES  (1, 'RECRUITER', 90000),
         (3, 'SOFTWARE ENGINEER', 120000),
         (4, 'ACCOUNT MANAGER', 160000),
         (4, 'ACCOUNTANT', 125000),
-        (5, 'LAWYER', 190000),
-        (6, 'TBD', 0);
+        (5, 'LAWYER', 190000);
 
 INSERT INTO employee (role_id, first_name, last_name, manager_id)
 VALUES  (1, 'ANA', 'ALBERTS', null),
