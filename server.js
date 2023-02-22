@@ -74,7 +74,6 @@ function start() {
                 process.exit();
             default:
                 process.exit();
-
         }
     })
 }
@@ -257,8 +256,9 @@ function addRole() {
             },
             {
                 message: 'What is the salary of this role?',
-                type: 'number',
+                type: 'input',
                 name: 'salary',
+                // confirm number has been inputted and if not, ask the question again
                 validate: function (salary) {
                     if (isNaN(salary)) {
                         console.log('     Please enter a numerical value');
