@@ -148,9 +148,9 @@ github profile: https://github.com/MadelineLowes
 
 [contributors-shield]: https://img.shields.io/github/contributors/MadelineLowes/organize-my-business.svg?style=for-the-badge
 [contributors-url]: https://github.com/MadelineLowes/organize-my-business/graphs/contributors
-[issues-shield]: https://img.shields.io/github/issues/MadelineLowes/organize-my-business
+[issues-shield]: https://img.shields.io/github/issues/MadelineLowes/organize-my-business.svg?style=for-the-badge
 [issues-url]: https://github.com/MadelineLowes/organize-my-business/issues
-[license-shield]: https://img.shields.io/github/license/MadelineLowes/organize-my-business
+[license-shield]: https://img.shields.io/github/license/MadelineLowes/organize-my-business.svg?style=for-the-badge
 [license-url]: https://github.com/MadelineLowes/organize-my-business/blob/main/LICENSE
 [github-shield]: https://img.shields.io/badge/-github-black.svg?style=for-the-badge&logo=github&colorB=555
 [github-url]: https://github.com/MadelineLowes/organize-my-business
