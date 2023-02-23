@@ -41,19 +41,19 @@ Users can follow the video walkthrough attached below or the steps listed.
 - On line 19 in the server.js file, replace the mysql password value with the user's own
 - Login to mysql
   ```sh
-mysql -u root -p // enter user's mysql password; same value as the step above
+  mysql -u root -p // enter user's mysql password; same value as the step above
   ```
 - Create the database
   ```sh
-SOURCE db/schema.sql
+  SOURCE db/schema.sql
   ```
 - Seed table to the database
   ```sh
-SOURCE db/seeds.sql
+  SOURCE db/seeds.sql
   ```
 - Exit mysql
   ```sh
-quit
+  quit
   ```
 
 ## Usage
