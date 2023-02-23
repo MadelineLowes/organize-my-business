@@ -39,65 +39,65 @@ Users can follow the video walkthrough attached below or the steps listed.
   npm install
   ```
 - On line 19 in the server.js file, replace the mysql password value with the user's own
-- Login to mysql:
+- Login to mysql
   ```sh
-mysql -u root -p // enter user's mysql password; same value as the step above
+  mysql -u root -p // enter user's mysql password; same value as the step above
   ```
-- Create the database:
+- Create the database
   ```sh
-SOURCE db/schema.sql
+  SOURCE db/schema.sql
   ```
-- Seed table to the database:
+- Seed table to the database
   ```sh
-SOURCE db/seeds.sql
+  SOURCE db/seeds.sql
   ```
-- Exit mysql:
+- Exit mysql
   ```sh
-quit
+  quit
   ```
 
 ## Usage
 
 Users can follow the video walkthrough attached below or the steps listed.
 
-- Start/restart the app:
+- Start/restart the app
   ```sh
-node server.js
+  node server.js
   ```
 - If at any point the user would like to exit the app, use up and down arrow keys to select "Quit"
 - Scroll through the app's options using up and down arrow keys; the options are descriptive and intuitively named
 - View the app's default options, displayed as tables, by selecting "View all departments", "View all roles", and/or "View all employees"
 - View the app's viewing capabilities, displayed as tables, by selecting "View employees by manager",and "View employees by department"
-- Add a department by selecting "Add department" and follow the prompts:
+- Add a department by selecting "Add department" and follow the prompts
   ```sh
-    "What is the name of the department?" // input value
+  "What is the name of the department?" // input value
   ```
-- Add a role by selecting "Add role" and follow the prompts:
+- Add a role by selecting "Add role" and follow the prompts
   ```sh
-"What is the title of the role?" // input value
-"What department does this role belong to?" // use up and down arrow keys to select
-"What is the salary of this role?" // input numerical value
+  "What is the title of the role?" // input value
+  "What department does this role belong to?" // use up and down arrow keys to select
+  "What is the salary of this role?" // input numerical value
   ```
-- Add an employee by selecting "Add employee" and follow the prompts:
+- Add an employee by selecting "Add employee" and follow the prompts
   ```sh
-"What is the first name of the employee?" // input value
-"What is the last name of the employee?" // input value
-"What is this employees title/role?" // use up and down arrow keys to select
-"Who is this employees manager?" // use up and down arrow keys to select
+  "What is the first name of the employee?" // input value
+  "What is the last name of the employee?" // input value
+  "What is this employees title/role?" // use up and down arrow keys to select
+  "Who is this employees manager?" // use up and down arrow keys to select
   ```
-- Update an employees role by selecting "Update employee's role" and follow the prompts:
+- Update an employees role by selecting "Update employee's role" and follow the prompts
   ```sh
-"What is the name of the employee you would like to update?" // use up and down arrow keys to select
-"What would you like to update their role to?" // use up and down arrow keys to select
+  "What is the name of the employee you would like to update?" // use up and down arrow keys to select
+  "What would you like to update their role to?" // use up and down arrow keys to select
   ```
-- Update an employees manager by selecting "Update employee's manager" and follow the prompts:
+- Update an employees manager by selecting "Update employee's manager" and follow the prompts
   ```sh
-"What is the name of the employee you would like to update?" // use up and down arrow keys to select
-"Who would you like to update their manager to?" // use up and down arrow keys to select
+  "What is the name of the employee you would like to update?" // use up and down arrow keys to select
+  "Who would you like to update their manager to?" // use up and down arrow keys to select
   ```
-- Delete an employee by selecting "Delete employee" and follow the prompts:
+- Delete an employee by selecting "Delete employee" and follow the prompts
   ```sh
-"Which employee would you like to delete?" // use up and down arrow keys to select
+  "Which employee would you like to delete?" // use up and down arrow keys to select
   ```
 
 Walk-through video:
