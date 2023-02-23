@@ -486,8 +486,6 @@ function deleteEmp() {
             const sql = `SELECT employee.id, employee.first_name, employee.last_name, employee.manager_id FROM employee WHERE id = ${answerObj.employee_id}`
             db.query(sql, function (err, results) {
                 if (err) throw err;
-                console.log(results)
-                console.log(results[0].id)
                 console.log('\n');
                 console.log("===========================================================================");
                 console.log(`The employee you have deleted is ${results[0].first_name} ${results[0].last_name}.`);
