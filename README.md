@@ -129,8 +129,8 @@ https://opensource.org/licenses/MIT
 ## Questions
 
 Madeline Lowes:
-email: madeline.lowes@gmail.com
-github profile: https://github.com/MadelineLowes
+- email: madeline.lowes@gmail.com
+- github profile: https://github.com/MadelineLowes
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
