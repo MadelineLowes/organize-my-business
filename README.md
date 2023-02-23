@@ -146,7 +146,7 @@ github profile: https://github.com/MadelineLowes
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/MadelineLowes/organize-my-business
+[contributors-shield]: https://img.shields.io/github/contributors/MadelineLowes/organize-my-business.svg?style=for-the-badge
 [contributors-url]: https://github.com/MadelineLowes/organize-my-business/graphs/contributors
 [issues-shield]: https://img.shields.io/github/issues/MadelineLowes/organize-my-business
 [issues-url]: https://github.com/MadelineLowes/organize-my-business/issues
