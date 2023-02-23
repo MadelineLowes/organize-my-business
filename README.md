@@ -39,16 +39,6 @@ Users can follow the video walkthrough attached below or the steps listed.
   npm install
   ```
 - On line 19 in the server.js file, replace the mysql password value with the user's own:
-  ```sh
- const db = mysql.createConnection(
-    {
-        host: 'localhost',
-        user: 'root',
-        password: '', // user's password goes here
-        database: 'company_db'
-    },
-)
-  ```
 - Login to mysql:
   ```sh
   mysql -u root -p
