@@ -26,7 +26,7 @@ db.connect(function (err) {
     start();
 })
 
-// called from connection.js once connection is established
+// called from connection.js once connection is established to start the app
 function start() {
     inquirer.prompt([
         {
@@ -119,10 +119,12 @@ function viewEmp() {
 };
 
 function viewEmpByMan() {
+     // query to allow users to select manager in inquirer.prompt
     const sql = 'SELECT employee.id, employee.first_name AS first, employee.last_name AS last FROM employee';
     db.query(sql, function (err, results) {
         if (err) throw err;
         const manChoices = [];
+        // adding each result name & value to the empty array
         for (i = 0; i < results.length; i++) {
             manChoices.push({
                 name: results[i].first + ' ' + results[i].last,
@@ -163,10 +165,12 @@ function viewEmpByMan() {
 };
 
 function viewEmpByDept() {
+     // query to allow users to select department in inquirer.prompt
     const sql = 'SELECT department.id, department.dep_name AS department FROM department';
     db.query(sql, function (err, results) {
         if (err) throw err;
         const deptChoices = [];
+        // adding each result name & value to the empty array
         for (i = 0; i < results.length; i++) {
             deptChoices.push({
                 name: results[i].department,
@@ -231,16 +235,19 @@ function addDept() {
 }
 
 function addRole() {
+    // query to allow users to select department in inquirer.prompt
     const sql = 'SELECT department.id, department.dep_name AS department FROM department';
     db.query(sql, function (err, results) {
         if (err) throw err;
         const deptChoices = [];
+        // adding each result name & value to the empty array
         for (i = 0; i < results.length; i++) {
             deptChoices.push({
                 name: results[i].department,
                 value: results[i].id,
             })
         }
+        // option added in case the role doesn't have a department yet
         deptChoices.push({ name: 'TBD', value: null});
         inquirer.prompt([
             {
@@ -277,10 +284,6 @@ function addRole() {
                 console.log('No salary provided')
                 // restart function
                 addRole();
-            } else if (answerObj.department_id == '') {
-                console.log('No department selected')
-                // restart function
-                addRole();
             } else {
                 const sql = `INSERT INTO role (department_id, title, salary) VALUES ROW (${answerObj.department_id}, '${answerObj.title}', ${answerObj.salary})`;
                 db.query(sql, function (err) {
@@ -294,27 +297,31 @@ function addRole() {
 };
 
 function addEmp() {
+    // query to allow users to select role in inquirer.prompt
     const sqlRole = 'SELECT role.id, role.title FROM role';
     db.query(sqlRole, function (err, results) {
         if (err) throw err;
         const roleChoices = [];
+        // adding each result name & value to the empty array
         for (i = 0; i < results.length; i++) {
             roleChoices.push({
                 name: results[i].title,
                 value: results[i].id,
             })
         }
+        // query to allow users to select manager in inquirer.prompt
         const sqlMan = 'SELECT employee.id, employee.first_name AS first, employee.last_name AS last FROM employee';
         db.query(sqlMan, function (err, results) {
             if (err) throw err;
             const manChoices = [];
+            // adding each result name & value to the empty array
             for (i = 0; i < results.length; i++) {
                 manChoices.push({
                     name: results[i].first + ' ' + results[i].last,
                     value: results[i].id,
                 })
             }
-            // adding options to array in case
+            // options added in case the role and/or manager hasn't been assigned yet
             roleChoices.push({ name: 'TBD', value: null });
             manChoices.push({ name: 'NULL', value: null });
             inquirer.prompt([
@@ -364,27 +371,31 @@ function addEmp() {
 
 // UPDATE
 function updateEmpRole() {
+    // query to allow users to select role in inquirer.prompt
     const sqlRole = 'SELECT role.id, role.title FROM role';
     db.query(sqlRole, function (err, results) {
         if (err) throw err;
         const roleChoices = [];
+        // adding each result name & value to the empty array
         for (i = 0; i < results.length; i++) {
             roleChoices.push({
                 name: results[i].title,
                 value: results[i].id,
             })
         }
+        // query to allow users to select employee in inquirer.prompt
         const sqlEmp = 'SELECT employee.id, employee.first_name AS first, employee.last_name AS last FROM employee';
         db.query(sqlEmp, function (err, results) {
             if (err) throw err;
             const empChoices = [];
+            // adding each result name & value to the empty array
             for (i = 0; i < results.length; i++) {
                 empChoices.push({
                     name: results[i].first + ' ' + results[i].last,
                     value: results[i].id,
                 })
             }
-            // if employee is changing roles but the role isn't yet determined
+            // option added in case employee is changing roles but the role isn't yet determined
             roleChoices.push({ name: 'TBD', value: null });
             inquirer.prompt([
                 {
@@ -412,16 +423,19 @@ function updateEmpRole() {
 };
 
 function updateEmpMan() {
+    // query to allow users to select employee & manager in inquirer.prompt
     const sql = 'SELECT employee.id, employee.first_name AS first, employee.last_name AS last FROM employee';
     db.query(sql, function (err, results) {
         if (err) throw err;
         const empChoices = [];
+        // adding each result name & value to the empty array
         for (i = 0; i < results.length; i++) {
             empChoices.push({
                 name: results[i].first + ' ' + results[i].last,
                 value: results[i].id,
             })
         }
+        // option added in case the employee is becoming a manager or their manager hasn't yet been assigned
         empChoices.push({ name: 'NULL', value: null });
         inquirer.prompt([
             {
@@ -449,10 +463,12 @@ function updateEmpMan() {
 
 // DELETE 
 function deleteEmp() {
+    // query to allow users to select employee in inquirer.prompt
     const sqlEmp = 'SELECT employee.id, employee.first_name AS first, employee.last_name AS last FROM employee';
     db.query(sqlEmp, function (err, results) {
         if (err) throw err;
         const empChoices = [];
+        // adding each result name & value to the empty array
         for (i = 0; i < results.length; i++) {
             empChoices.push({
                 name: results[i].first + ' ' + results[i].last,
