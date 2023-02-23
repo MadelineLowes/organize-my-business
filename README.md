@@ -22,7 +22,7 @@ It is intended to be used by employers/business owners to be able to organize & 
 
 ## Getting Started
 
-##### Prerequisites
+### Prerequisites
 
 - Install [Node.js] following the steps in the documentation (https://nodejs.org/en/download/)
 - Install the [MySQL2 package] following the steps in the documentation (https://www.npmjs.com/package/mysql2)
@@ -33,6 +33,10 @@ Users can follow the video walkthrough attached below or the steps listed.
 - Clone the repo
   ```sh
   git clone https://github.com/MadelineLowes/organize-my-business
+  ```
+- Navigate into cloned repo
+  ```sh
+  cd organize-my-business
   ```
 - Install dependencies
   ```sh
@@ -100,7 +104,7 @@ Users can follow the video walkthrough attached below or the steps listed.
   "Which employee would you like to delete?" // use up and down arrow keys to select
   ```
 
-Walk-through video:
+Walk-through video: https://drive.google.com/file/d/1ifFrajZq96FgeCJj5TRtvSooAavVU-3N/view
 
 
 ## Credits
