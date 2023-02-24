@@ -15,6 +15,7 @@ It is intended to be used by employers/business owners to be able to organize & 
 
 - [Description](#description)
 - [Getting Started](#getting_started)
+- [Installation](#intallation)
 - [Usage](#usage)
 - [Credits](#credits)
 - [License](#license)
